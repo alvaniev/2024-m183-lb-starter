@@ -1,0 +1,761 @@
+{
+	"info": {
+		"_postman_id": "4c1b849d-ca0b-457d-a9f3-097ca22f0460",
+		"name": "2024-m183-lbv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9910444"
+	},
+	"item": [
+		{
+			"name": "1 - login - user 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"POST /login - status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"const avatarUrl = res.avatar;",
+							"const avatar = avatarUrl.substring(avatarUrl.lastIndexOf(\"/\")+1);",
+							"const payload = JSON.parse(atob(res.jwt.split(\".\")[1]));",
+							"",
+							"pm.test(\"POST /login - response\", () => {",
+							"  pm.expect(!!payload.iat && !!payload.exp && !!payload.sub).to.be.true;",
+							"  pm.expect(payload.iat).to.be.a(\"number\");",
+							"  pm.expect(payload.exp).to.be.a(\"number\");",
+							"  pm.expect(payload.exp - payload.iat).to.be.eql(parseInt(pm.environment.get(\"jwt_expiration\")));",
+							"  pm.expect(res.username).to.eql(pm.environment.get(\"user_3_username\"));",
+							"  pm.expect(res.firstname).to.eql(pm.environment.get(\"user_3_firstname\"));",
+							"  pm.expect(res.lastname).to.eql(pm.environment.get(\"user_3_lastname\"));",
+							"  pm.expect(avatar).to.eql(pm.environment.get(\"user_3_avatar\"));",
+							"  pm.expect(res.pwd).to.eql(null);",
+							"});",
+							"pm.environment.set(\"user_3_jwt\", res.jwt);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{user_3_username}}\",\n    \"pwd\": \"{{user_3_pwd}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - login - user 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"POST /login - status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"const avatarUrl = res.avatar;",
+							"const avatar = avatarUrl.substring(avatarUrl.lastIndexOf(\"/\")+1);",
+							"const payload = JSON.parse(atob(res.jwt.split(\".\")[1]));",
+							"",
+							"pm.test(\"POST /login - response\", () => {",
+							"  pm.expect(!!payload.iat && !!payload.exp && !!payload.sub).to.be.true;",
+							"  pm.expect(payload.iat).to.be.a(\"number\");",
+							"  pm.expect(payload.exp).to.be.a(\"number\");",
+							"  pm.expect(payload.exp - payload.iat).to.be.eql(parseInt(pm.environment.get(\"jwt_expiration\")));",
+							"  pm.expect(res.username).to.eql(pm.environment.get(\"user_4_username\"));",
+							"  pm.expect(res.firstname).to.eql(pm.environment.get(\"user_4_firstname\"));",
+							"  pm.expect(res.lastname).to.eql(pm.environment.get(\"user_4_lastname\"));",
+							"  pm.expect(avatar).to.eql(pm.environment.get(\"user_4_avatar\"));",
+							"  pm.expect(res.pwd).to.eql(null);",
+							"});",
+							"pm.environment.set(\"user_4_jwt\", res.jwt);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{user_4_username}}\",\n    \"pwd\": \"{{user_4_pwd}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - login-admin  - user 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"POST /login - status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"const avatarUrl = res.avatar;",
+							"const avatar = avatarUrl.substring(avatarUrl.lastIndexOf(\"/\")+1);",
+							"pm.test(\"POST /login - response\", () => {",
+							"  pm.expect(res.jwt).not.empty;",
+							"  pm.expect(res.username).to.eql(pm.environment.get(\"user_5_username\"));",
+							"  pm.expect(res.firstname).to.eql(pm.environment.get(\"user_5_firstname\"));",
+							"  pm.expect(res.lastname).to.eql(pm.environment.get(\"user_5_lastname\"));",
+							"  pm.expect(avatar).to.eql(pm.environment.get(\"user_5_avatar\"));",
+							"});",
+							"pm.environment.set(\"user_5_jwt\", res.jwt);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{user_5_username}}\",\n    \"pwd\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - get-users-by-id - valid token - owner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - by id - status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"",
+							"const avatarUrl = res.avatar;",
+							"const avatar = avatarUrl.substring(avatarUrl.lastIndexOf(\"/\")+1);",
+							"",
+							"pm.test(\"GET /users - by ids - response\", () => {",
+							"  pm.expect(res.username).to.eql(pm.environment.get(\"user_3_username\"));",
+							"  pm.expect(res.firstname).to.eql(pm.environment.get(\"user_3_firstname\"));",
+							"  pm.expect(res.lastname).to.eql(pm.environment.get(\"user_3_lastname\"));",
+							"  pm.expect(avatar).to.eql(pm.environment.get(\"user_3_avatar\"));",
+							"  pm.expect(res.pwd).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_3_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 - get-users-by-id  - valid token - not owner - not admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - unauthorized subject/user for that ressource - status\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"GET /users - unauthorized subject/user for that ressource - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"forbidden\"));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_4_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 - get-users-by-id - valid token - admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - by id (not owner, but admin)- status\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"const avatarUrl = user.avatar;",
+							"const avatar = avatarUrl.substring(avatarUrl.lastIndexOf(\"/\")+1);",
+							"pm.test(\"GET /users - by id (not owner, but admin) - response\", () => {",
+							"  pm.expect(user.username).to.eql(pm.environment.get(\"user_3_username\"));",
+							"  pm.expect(user.firstname).to.eql(pm.environment.get(\"user_3_firstname\"));",
+							"  pm.expect(user.lastname).to.eql(pm.environment.get(\"user_3_lastname\"));",
+							"  pm.expect(avatar).to.eql(pm.environment.get(\"user_3_avatar\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_5_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 - login - non-existing-user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"POST /login - wrong passwort status\", () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"POST /login - wrong password - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"login_fail\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"rubish\",\n    \"pwd\": \"{{user_3_pwd}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - login - wrong-pwd",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"POST /login - wrong pwd status\", () => {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"POST /login - wrong pwd - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"login_fail\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{user_3_username}}\",\n    \"pwd\": \"rubish\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - get-users-by-id  - missing authorization header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - missing authorization header - status\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"GET /users - missing authorization header - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"forbidden\"));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - get-users-by-id  - non-bearer-authroization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - invalid authorization type, only 'Bearer' is accepted - status\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"GET /users - invalid authorzatione type, only 'Bearer' is accepted - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"forbidden\"));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "foo {{user_3_jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - get-users-by-id  - missing token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - missing token - status\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"GET /users - missing token - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"forbidden\"));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 - get-users-by-id  - invalid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GET /users - invalid token - status\", () => {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"const res = pm.response.json();",
+							"pm.test(\"GET /users - invalid token - response\", () => {",
+							"  pm.expect(res.errorMessage).to.eql(pm.environment.get(\"forbidden\"));",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{expired_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/{{user_3_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_3_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
